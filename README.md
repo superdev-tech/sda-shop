@@ -21,8 +21,17 @@ repo นี้คือร้านค้าออนไลน์ **sda-shop** �
 **macOS** (ใช้ Homebrew จาก [brew.sh](https://brew.sh) ซึ่งจะลง Command Line Tools ที่มี Git และ Make มาให้ด้วย)
 
 ```bash
-brew install go node
+brew install go
 brew install --cask visual-studio-code
+```
+
+Node ติดตั้งผ่าน [nvm](https://github.com/nvm-sh/nvm) ไม่ใช่ `brew install node` เพื่อให้สลับเวอร์ชันตาม repo ได้
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash
+# ปิด terminal แล้วเปิดใหม่ ก่อนพิมพ์คำสั่งต่อไป
+nvm install --lts
+nvm alias default 'lts/*'
 ```
 
 **Windows** (เปิด PowerShell แล้วใช้ winget จากนั้นปิดแล้วเปิด terminal ใหม่)
@@ -30,16 +39,23 @@ brew install --cask visual-studio-code
 ```powershell
 winget install --id Git.Git
 winget install --id GoLang.Go
-winget install --id OpenJS.NodeJS.LTS
+winget install --id CoreyButler.NVMforWindows
 winget install --id Microsoft.VisualStudioCode
 winget install --id ezwinports.make
 ```
 
+ปิดแล้วเปิด PowerShell ใหม่ จากนั้นติดตั้ง Node LTS ผ่าน [nvm-windows](https://github.com/coreybutler/nvm-windows) (ถ้าเคยลง Node แบบอื่นไว้ ให้ถอนออกก่อน)
+
+```powershell
+nvm install lts
+nvm use lts
+```
+
 เช็กว่าพร้อม: `go version` · `node -v` · `npm -v` · `git --version` · `make --version`
 
-> Node ต้องเป็น **24.15 ขึ้นไป** (Nuxt 4.7 ต้องการ) ถ้าต่ำกว่านี้ให้อัปเดตด้วย `brew upgrade node` หรือ `winget upgrade OpenJS.NodeJS.LTS`
+> repo นี้ lock Node ไว้ที่ **26** (LTS) ในไฟล์ [`.nvmrc`](.nvmrc) พอ clone แล้วให้พิมพ์ `nvm use` ในโฟลเดอร์ repo เพื่อสลับให้ตรง (Windows พิมพ์ `nvm use 26` ตามเลขในไฟล์)
 
-ใน VS Code ให้ติดตั้ง extension **Go** และ **Bruno**
+ใน VS Code ให้ติดตั้ง extension **Go**, **Bruno** และแนะนำ **[Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph)** ไว้ดูประวัติ commit
 
 ### 2. Fork แล้ว clone
 
@@ -50,6 +66,7 @@ winget install --id ezwinports.make
 ```bash
 git clone https://github.com/<บัญชีของคุณ>/sda-shop.git
 cd sda-shop
+nvm use        # อ่านเวอร์ชันจาก .nvmrc (ถ้ายังไม่มีเวอร์ชันนี้ พิมพ์ nvm install)
 code .
 ```
 
