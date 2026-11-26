@@ -19,3 +19,6 @@ backend/bin/
 .DS_Store
 Thumbs.db
 *.log
+
+# bruno (ไฟล์ที่ extension สร้างเองตอนเปิด collection)
+bruno/collection.bru
