@@ -1,0 +1,28 @@
+meta {
+  name: Health check
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/healthz
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.status: eq ok
+}
+
+docs {
+  ## GET /healthz
+
+  เช็กว่า backend เปิดอยู่ และต่อฐานข้อมูลบน Supabase ได้
+
+  ผลที่ควรได้: `200` และ `{"status":"ok"}`
+
+  ถ้าได้ `503` และ `{"status":"error","database":"down"}` ให้เช็ก `DATABASE_URL` ในไฟล์ `.env`
+
+  ถ้าขึ้น connection refused แปลว่ายังไม่ได้รัน `make dev`
+}

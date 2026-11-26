@@ -1,0 +1,28 @@
+meta {
+  name: Categories (ยังไม่มี)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/categories
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 404
+  res.body.error.code: eq not_found
+}
+
+docs {
+  ## GET /api/categories
+
+  เส้นที่หน้าแรกของร้านเรียก แต่ backend ยังไม่มี จึงตอบ `404`
+
+  ```json
+  {"error":{"code":"not_found","message":"ยังไม่มีเส้นนี้: GET /api/categories"}}
+  ```
+
+  ในโมดูล 3 เราจะออกแบบเส้นนี้ แล้วแก้ assert ด้านบนเป็น `res.status: eq 200`
+}

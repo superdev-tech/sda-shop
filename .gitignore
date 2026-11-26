@@ -1,0 +1,21 @@
+# ความลับ
+.env
+.env.*
+!.env.example
+
+# frontend
+node_modules/
+.nuxt/
+.output/
+dist/
+.data/
+.nitro/
+.cache/
+
+# backend
+backend/bin/
+
+# ระบบ
+.DS_Store
+Thumbs.db
+*.log
