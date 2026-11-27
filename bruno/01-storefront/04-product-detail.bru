@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/products/doi-chang-arabica
+  url: {{baseUrl}}/api/products/:slug
   body: none
   auth: none
+}
+
+params:path {
+  slug: doi-chang-arabica
 }
 
 assert {

@@ -5,9 +5,16 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/products?page=1&limit=8&category=coffee&q=
+  url: {{baseUrl}}/api/products?page=1&limit=8
   body: none
   auth: none
+}
+
+params:query {
+  page: 1
+  limit: 8
+  ~category: coffee
+  ~q: กาแฟ
 }
 
 assert {
@@ -18,26 +25,26 @@ assert {
 
 docs {
   ## GET /api/products?page=&limit=&category=&q=
-
+  
   หน้ารายการสินค้า · public
-
+  
   | query | ความหมาย | ถ้าไม่ส่ง |
   |---|---|---|
   | `page` | หน้าที่เท่าไร เริ่มที่ 1 | 1 |
   | `limit` | กี่ชิ้นต่อหน้า (หน้าเว็บส่ง 8) | 8 |
   | `category` | slug ของหมวด เช่น `coffee` | ทุกหมวด |
   | `q` | คำค้นในชื่อสินค้า | ไม่กรอง |
-
+  
   ```json
   {
     "data": [ ... ],
     "meta": { "page": 1, "limit": 8, "total": 3 }
   }
   ```
-
+  
   หน้าเว็บคำนวณจำนวนหน้าจาก `total / limit` เอง
-
+  
   - `page` หรือ `limit` ไม่ใช่ตัวเลข → `400` `{"error":{"code":"invalid_query", ...}}`
-
+  
   ตอนนี้ backend ยังไม่มีเส้นนี้ จึงได้ `404` และ assert ด้านบนไม่ผ่าน เป็นเรื่องปกติ เราจะเขียนให้ผ่านในโมดูล 5
 }

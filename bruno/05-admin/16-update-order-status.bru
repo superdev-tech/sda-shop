@@ -5,9 +5,13 @@ meta {
 }
 
 patch {
-  url: {{baseUrl}}/api/admin/orders/{{orderId}}/status
+  url: {{baseUrl}}/api/admin/orders/:id/status
   body: json
   auth: bearer
+}
+
+params:path {
+  id: {{orderId}}
 }
 
 auth:bearer {

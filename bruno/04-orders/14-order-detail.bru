@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/orders/{{orderId}}
+  url: {{baseUrl}}/api/orders/:id
   body: none
   auth: bearer
+}
+
+params:path {
+  id: {{orderId}}
 }
 
 auth:bearer {

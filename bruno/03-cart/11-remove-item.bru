@@ -5,9 +5,13 @@ meta {
 }
 
 delete {
-  url: {{baseUrl}}/api/cart/items/1
+  url: {{baseUrl}}/api/cart/items/:productId
   body: none
   auth: bearer
+}
+
+params:path {
+  productId: 1
 }
 
 auth:bearer {
