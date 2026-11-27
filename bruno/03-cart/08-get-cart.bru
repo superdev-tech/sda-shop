@@ -1,0 +1,42 @@
+meta {
+  name: 08 · ดูตะกร้า
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/cart
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.items: isArray
+}
+
+docs {
+  ## GET /api/cart
+
+  หน้าตะกร้า · private
+
+  ```json
+  { "data": {
+    "items": [
+      { "product_id": 1, "slug": "doi-chang-arabica", "name": "กาแฟอาราบิก้าดอยช้าง 250 กรัม",
+        "image_url": "/images/coffee.svg", "price_satang": 32000, "quantity": 2, "stock": 40 }
+    ],
+    "total_satang": 64000
+  } }
+  ```
+
+  ตะกร้าว่างก็ตอบ `200` พร้อม `"items": []` ไม่ใช่ 404
+
+  - ไม่มี token → `401`
+
+  ตอนนี้ backend ยังไม่มีเส้นนี้ จึงได้ `404` และ assert ด้านบนไม่ผ่าน เป็นเรื่องปกติ เราจะเขียนให้ผ่านในโมดูล 5
+}

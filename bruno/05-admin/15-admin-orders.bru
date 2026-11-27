@@ -1,0 +1,37 @@
+meta {
+  name: 15 · คำสั่งซื้อทั้งหมด
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/admin/orders
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{adminToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.data: isArray
+}
+
+docs {
+  ## GET /api/admin/orders
+
+  หน้าหลังร้าน: คำสั่งซื้อ · admin
+
+  เหมือน **13** แต่เห็นของทุกคน และมี `customer` บอกว่าใครสั่ง
+
+  ```json
+  { "data": [ {
+    "id": 1, "status": "pending", "total_satang": 64000, "created_at": "...", "items": [ ... ],
+    "customer": { "id": 2, "name": "สมชาย ใจดี", "email": "somchai@example.com" }
+  } ] }
+  ```
+
+  ตอนนี้ backend ยังไม่มีเส้นนี้ จึงได้ `404` และ assert ด้านบนไม่ผ่าน เป็นเรื่องปกติ เราจะเขียนให้ผ่านในโมดูล 5
+}
