@@ -2,9 +2,10 @@
 // คำสั่งซื้อของฉัน (ต้อง login)
 //   เส้น 13: GET /api/orders
 import { ORDER_STATUS_LABEL, type List, type Order } from '~/composables/types'
+import { PH_ORDERS } from '~/composables/placeholders'
 
 const { request } = useApi()
-const orders = useApiData(() => request<List<Order>>('/api/orders'))
+const orders = useApiData(() => request<List<Order>>('/api/orders'), [], () => ({ data: PH_ORDERS }))
 </script>
 
 <template>
@@ -14,6 +15,8 @@ const orders = useApiData(() => request<List<Order>>('/api/orders'))
     :error="orders.error.value"
     :empty="!orders.data.value?.data.length"
     endpoint="GET /api/orders"
+    :placeholder="orders.placeholder.value"
+    skeleton="rows"
     empty-text="ยังไม่มีคำสั่งซื้อ"
   >
     <div class="card">

@@ -94,3 +94,32 @@ input, select, textarea { font: inherit; padding: 9px 12px; border: 1.5px solid 
 .notice-error { background: var(--danger-soft); color: var(--danger); }
 .notice-ok { background: var(--brand-soft); color: var(--brand); }
 .pager { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 16px; }
+
+/* skeleton: โครงหน้าจริงแบบไม่มีข้อมูล ใช้ตอนโหลด และตอนที่ API ยังไม่พร้อม */
+.skel { position: relative; display: grid; gap: 10px; }
+.skel-tag { margin: 0; justify-self: start; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  font-size: 0.82rem; color: var(--muted); background: var(--surface); border: 1.5px dashed var(--line); border-radius: 999px; padding: 4px 12px; }
+.skel-tag code { font-size: 0.78rem; }
+.skel-line, .skel-img, .skel-chip { display: block; background: var(--line); border-radius: 8px; }
+.skel:not(.skel-wait) :is(.skel-line, .skel-img, .skel-chip) { animation: skel-pulse 1.4s ease-in-out infinite; }
+@keyframes skel-pulse { 50% { opacity: 0.45; } }
+@media (prefers-reduced-motion: reduce) { .skel :is(.skel-line, .skel-img, .skel-chip) { animation: none !important; } }
+.skel-chip { width: 72px; height: 34px; border-color: transparent; }
+.skel-img { aspect-ratio: 4 / 3; width: 100%; border-radius: 0; background: var(--brand-soft); }
+.detail .skel-img { border-radius: var(--radius); }
+.skel-body { display: grid; gap: 10px; padding: 12px 14px 16px; }
+.detail .skel-body { padding: 0; align-content: start; }
+.skel-line { height: 12px; width: 100%; }
+.skel-line.s { width: 30%; } .skel-line.m { width: 45%; } .skel-line.l { height: 22px; width: 80%; }
+.skel-card { pointer-events: none; }
+.skel-field, .skel-row { margin: 0; display: grid; gap: 12px; align-items: center; }
+.skel-field { grid-template-columns: 90px minmax(0, 1fr); }
+.skel-row { grid-template-columns: minmax(0, 1fr) 70px 70px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.skel-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.skel-row .skel-line.s, .skel-field .skel-line.s { width: 100%; }
+.notice-wait { background: var(--surface); border: 1.5px dashed var(--line); color: var(--muted); }
+
+/* placeholder: ข้อมูลตัวอย่างที่แสดงแทนตอน API ยังไม่พร้อม (ดู composables/placeholders.ts) */
+.ph { display: grid; gap: 10px; }
+.ph-tag b { color: var(--brand); }
+.ph-body { border: 1.5px dashed var(--line); border-radius: var(--radius); padding: 10px; }

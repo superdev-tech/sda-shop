@@ -3,6 +3,7 @@
 //   เส้น 2: GET /api/categories (ตัวกรองหมวดหมู่)
 //   เส้น 3: GET /api/products?page=&limit=&category=&q=
 import type { Category, List, Paged, Product } from '~/composables/types'
+import { PH_CATEGORIES, phProductPage } from '~/composables/placeholders'
 
 const route = useRoute()
 const router = useRouter()
@@ -14,13 +15,14 @@ const category = computed(() => (route.query.category as string) || undefined)
 const q = computed(() => (route.query.q as string) || undefined)
 const search = ref(q.value ?? '')
 
-const categories = useApiData(() => request<List<Category>>('/api/categories'))
+const categories = useApiData(() => request<List<Category>>('/api/categories'), [], () => ({ data: PH_CATEGORIES }))
 const products = useApiData(
   () =>
     request<Paged<Product>>('/api/products', {
       query: { page: page.value, limit, category: category.value, q: q.value },
     }),
   [page, category, q],
+  () => phProductPage(page.value, limit, category.value, q.value),
 )
 
 const totalPages = computed(() => {
@@ -61,6 +63,9 @@ function go(query: Record<string, string | number | undefined>) {
     :error="products.error.value"
     :empty="!products.data.value?.data.length"
     endpoint="GET /api/products?page=&limit=&category=&q="
+    :placeholder="products.placeholder.value"
+    skeleton="cards"
+    :count="8"
     empty-text="ไม่พบสินค้าที่ค้นหา"
   >
     <div class="grid">
