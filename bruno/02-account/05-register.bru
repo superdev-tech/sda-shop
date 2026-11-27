@@ -1,0 +1,45 @@
+meta {
+  name: 05 · สมัครสมาชิก
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "สมชาย ใจดี",
+    "email": "{{customerEmail}}",
+    "password": "{{customerPassword}}"
+  }
+}
+
+assert {
+  res.status: eq 201
+  res.body.data.email: eq {{customerEmail}}
+}
+
+docs {
+  ## POST /api/auth/register
+
+  หน้าสมัครสมาชิก · public
+
+  ตอบ `201` พร้อมผู้ใช้ที่สร้าง (ไม่มีรหัสผ่านกลับมา)
+
+  ```json
+  { "data": { "id": 2, "email": "somchai@example.com", "name": "สมชาย ใจดี", "role": "customer" } }
+  ```
+
+  | กรณี | status | code |
+  |---|---|---|
+  | ข้อมูลไม่ครบ หรือรหัสสั้นกว่า 8 ตัว | `400` | `validation_error` |
+  | อีเมลนี้มีคนใช้แล้ว (ส่งซ้ำครั้งที่ 2) | `409` | `email_taken` |
+
+  อีเมลและรหัสผ่านมาจาก environment `local`
+
+  ตอนนี้ backend ยังไม่มีเส้นนี้ จึงได้ `404` และ assert ด้านบนไม่ผ่าน เป็นเรื่องปกติ เราจะเขียนให้ผ่านในโมดูล 5
+}

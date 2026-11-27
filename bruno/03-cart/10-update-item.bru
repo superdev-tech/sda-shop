@@ -1,0 +1,40 @@
+meta {
+  name: 10 · เปลี่ยนจำนวน
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/api/cart/items/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "quantity": 3
+  }
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  ## PATCH /api/cart/items/:productId
+
+  ปุ่ม + / − ในหน้าตะกร้า · private
+
+  ใช้ `PATCH` เพราะแก้แค่ช่อง `quantity` ช่องเดียว ไม่ได้ส่งของทั้งชิ้นมาแทน
+  ตอบ `200` พร้อมตะกร้าล่าสุด
+
+  - ไม่มีสินค้านี้ในตะกร้า → `404`
+  - `quantity` น้อยกว่า 1 → `400` (อยากเอาออกให้ใช้ DELETE)
+  - เกินสต็อก → `409` `out_of_stock`
+
+  ตอนนี้ backend ยังไม่มีเส้นนี้ จึงได้ `404` และ assert ด้านบนไม่ผ่าน เป็นเรื่องปกติ เราจะเขียนให้ผ่านในโมดูล 5
+}

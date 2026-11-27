@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // สมัครสมาชิก
-//   เส้น 4: POST /api/auth/register
+//   เส้น 5: POST /api/auth/register
 import type { ApiError } from '~/composables/useApi'
 
 const { request } = useApi()

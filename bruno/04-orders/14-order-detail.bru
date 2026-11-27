@@ -1,0 +1,34 @@
+meta {
+  name: 14 · รายละเอียดคำสั่งซื้อ
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/orders/{{orderId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.id: eq {{orderId}}
+}
+
+docs {
+  ## GET /api/orders/:id
+
+  หน้ารายละเอียดคำสั่งซื้อ · private
+
+  `{{orderId}}` มาจาก script ของ **12 · สั่งซื้อ**
+
+  - ไม่มีคำสั่งซื้อนี้ → `404`
+  - เป็นคำสั่งซื้อของคนอื่น → ตอบ `404` เหมือนกัน
+    (ตอบ `403` ก็ได้ แต่ `404` ไม่บอกคนแปลกหน้าว่าเลขนี้มีอยู่จริง)
+
+  ตอนนี้ backend ยังไม่มีเส้นนี้ จึงได้ `404` และ assert ด้านบนไม่ผ่าน เป็นเรื่องปกติ เราจะเขียนให้ผ่านในโมดูล 5
+}

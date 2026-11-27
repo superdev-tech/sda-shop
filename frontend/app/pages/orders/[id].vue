@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // รายละเอียดคำสั่งซื้อ (ต้อง login)
-//   เส้น 13: GET /api/orders/:id
+//   เส้น 14: GET /api/orders/:id
 import { ORDER_STATUS_LABEL, type One, type Order } from '~/composables/types'
 
 const route = useRoute()

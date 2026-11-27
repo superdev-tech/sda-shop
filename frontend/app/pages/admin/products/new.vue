@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // หลังร้าน: เพิ่มสินค้าใหม่ (ต้องเป็น admin)
-//   เส้น 1:  GET  /api/categories
-//   เส้น 16: POST /api/admin/products
+//   เส้น 2:  GET  /api/categories
+//   เส้น 17: POST /api/admin/products
 import type { ApiError } from '~/composables/useApi'
 import type { Category, List, One, Product } from '~/composables/types'
 

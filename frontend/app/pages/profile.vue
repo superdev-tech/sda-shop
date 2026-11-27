@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // โปรไฟล์ของฉัน
-//   เส้น 6: GET /api/me  (ต้อง login)
+//   เส้น 7: GET /api/me  (ต้อง login)
 import type { AuthUser } from '~/composables/useAuth'
 import type { One } from '~/composables/types'
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // คำสั่งซื้อของฉัน (ต้อง login)
-//   เส้น 12: GET /api/orders
+//   เส้น 13: GET /api/orders
 import { ORDER_STATUS_LABEL, type List, type Order } from '~/composables/types'
 
 const { request } = useApi()

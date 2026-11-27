@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // หน้าแรก
-//   เส้น 0: GET /api/products/featured
-//   เส้น 1: GET /api/categories
+//   เส้น 1: GET /api/products/featured
+//   เส้น 2: GET /api/categories
 import type { Category, List, Product } from '~/composables/types'
 
 const { request } = useApi()

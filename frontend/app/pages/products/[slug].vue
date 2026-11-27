@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // รายละเอียดสินค้า
-//   เส้น 3: GET /api/products/:slug
-//   เส้น 8: POST /api/cart/items  (ต้อง login)
+//   เส้น 4: GET /api/products/:slug
+//   เส้น 9: POST /api/cart/items  (ต้อง login)
 import type { ApiError } from '~/composables/useApi'
 import type { One, Product } from '~/composables/types'
 

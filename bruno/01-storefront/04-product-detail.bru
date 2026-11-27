@@ -1,0 +1,42 @@
+meta {
+  name: 04 · รายละเอียดสินค้า
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/api/products/doi-chang-arabica
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.slug: eq doi-chang-arabica
+}
+
+docs {
+  ## GET /api/products/:slug
+
+  หน้ารายละเอียดสินค้า `/products/doi-chang-arabica` · public
+
+  ใช้ **slug** (ชื่อใน URL) ไม่ใช่ id เพราะหน้าเว็บมีแค่ slug จาก URL
+
+  ```json
+  { "data": {
+      "id": 1,
+      "slug": "doi-chang-arabica",
+      "name": "กาแฟอาราบิก้าดอยช้าง 250 กรัม",
+      "description": "คั่วกลาง หอมถั่วและช็อกโกแลต",
+      "price_satang": 32000,
+      "stock": 40,
+      "image_url": "/images/coffee.svg",
+      "is_featured": true,
+      "category": { "id": 1, "slug": "coffee", "name": "กาแฟ" }
+    } }
+  ```
+
+  - ไม่มี slug นี้ → `404` `{"error":{"code":"not_found","message":"ไม่พบสินค้า"}}`
+
+  ตอนนี้ backend ยังไม่มีเส้นนี้ จึงได้ `404` และ assert ด้านบนไม่ผ่าน เป็นเรื่องปกติ เราจะเขียนให้ผ่านในโมดูล 5
+}

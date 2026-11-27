@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // รายการสินค้า
-//   เส้น 1: GET /api/categories (ตัวกรองหมวดหมู่)
-//   เส้น 2: GET /api/products?page=&limit=&category=&q=
+//   เส้น 2: GET /api/categories (ตัวกรองหมวดหมู่)
+//   เส้น 3: GET /api/products?page=&limit=&category=&q=
 import type { Category, List, Paged, Product } from '~/composables/types'
 
 const route = useRoute()

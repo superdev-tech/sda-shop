@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // หลังร้าน: คำสั่งซื้อทั้งหมด (ต้องเป็น admin)
-//   เส้น 14: GET   /api/admin/orders
-//   เส้น 15: PATCH /api/admin/orders/:id/status   { status }
+//   เส้น 15: GET   /api/admin/orders
+//   เส้น 16: PATCH /api/admin/orders/:id/status   { status }
 import type { ApiError } from '~/composables/useApi'
 import { ORDER_STATUS_LABEL, type List, type Order, type OrderStatus } from '~/composables/types'
 

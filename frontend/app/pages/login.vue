@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // เข้าสู่ระบบ
-//   เส้น 5: POST /api/auth/login  -> { data: { token, user } }
+//   เส้น 6: POST /api/auth/login  -> { data: { token, user } }
 import type { ApiError } from '~/composables/useApi'
 import type { AuthUser } from '~/composables/useAuth'
 import type { One } from '~/composables/types'

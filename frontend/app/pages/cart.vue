@@ -1,9 +1,9 @@
 <script setup lang="ts">
 // ตะกร้าสินค้า (ต้อง login)
-//   เส้น 7:  GET    /api/cart
-//   เส้น 9:  PATCH  /api/cart/items/:productId   { quantity }
-//   เส้น 10: DELETE /api/cart/items/:productId
-//   เส้น 11: POST   /api/orders                  สร้างคำสั่งซื้อจากตะกร้า
+//   เส้น 8:  GET    /api/cart
+//   เส้น 10: PATCH  /api/cart/items/:productId   { quantity }
+//   เส้น 11: DELETE /api/cart/items/:productId
+//   เส้น 12: POST   /api/orders                  สร้างคำสั่งซื้อจากตะกร้า
 import type { ApiError } from '~/composables/useApi'
 import type { Cart, One, Order } from '~/composables/types'
 

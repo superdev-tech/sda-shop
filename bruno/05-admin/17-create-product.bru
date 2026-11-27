@@ -1,0 +1,50 @@
+meta {
+  name: 17 · เพิ่มสินค้า
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/admin/products
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{adminToken}}
+}
+
+body:json {
+  {
+    "name": "ชาอู่หลงดอยแม่สลอง 100 กรัม",
+    "slug": "oolong-mae-salong",
+    "description": "ชาอู่หลงก้านอ่อน หอมดอกไม้",
+    "price_satang": 24900,
+    "stock": 15,
+    "category_id": 2,
+    "image_url": "/images/tea.svg",
+    "is_featured": false
+  }
+}
+
+assert {
+  res.status: eq 201
+  res.body.data.slug: eq oolong-mae-salong
+}
+
+docs {
+  ## POST /api/admin/products
+
+  หน้าหลังร้าน: เพิ่มสินค้า · admin
+
+  หน้าเว็บให้กรอกราคาเป็นบาท แล้วแปลงเป็นสตางค์ก่อนส่ง (249 บาท → `24900`)
+  ตอบ `201` พร้อมสินค้าที่สร้าง (รูปแบบเดียวกับ **04**)
+
+  | กรณี | status | code |
+  |---|---|---|
+  | ข้อมูลไม่ครบ ราคาติดลบ | `400` | `validation_error` |
+  | ไม่มีหมวด `category_id` นี้ | `400` | `validation_error` |
+  | slug ซ้ำ (ส่งซ้ำครั้งที่ 2) | `409` | `slug_taken` |
+
+  ตอนนี้ backend ยังไม่มีเส้นนี้ จึงได้ `404` และ assert ด้านบนไม่ผ่าน เป็นเรื่องปกติ เราจะเขียนให้ผ่านในโมดูล 5
+}
