@@ -6,11 +6,10 @@
 //   เส้น 12: POST   /api/orders                  สร้างคำสั่งซื้อจากตะกร้า
 import type { ApiError } from '~/composables/useApi'
 import type { Cart, One, Order } from '~/composables/types'
-import { PH_CART } from '~/composables/placeholders'
 
 const { request } = useApi()
 const { isLoggedIn } = useAuth()
-const cart = useApiData(() => request<One<Cart>>('/api/cart'), [], () => ({ data: PH_CART }))
+const cart = useApiData(() => request<One<Cart>>('/api/cart'))
 
 const busy = ref(false)
 const actionError = ref<ApiError | null>(null)
@@ -55,8 +54,6 @@ async function checkout() {
     :error="cart.error.value"
     :empty="!cart.data.value?.data.items.length"
     endpoint="GET /api/cart"
-    :placeholder="cart.placeholder.value"
-    skeleton="rows"
     empty-text="ตะกร้ายังว่าง"
   >
     <div v-if="cart.data.value" class="card">

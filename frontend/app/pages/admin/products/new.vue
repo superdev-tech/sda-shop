@@ -4,10 +4,9 @@
 //   เส้น 17: POST /api/admin/products
 import type { ApiError } from '~/composables/useApi'
 import type { Category, List, One, Product } from '~/composables/types'
-import { PH_CATEGORIES } from '~/composables/placeholders'
 
 const { request } = useApi()
-const categories = useApiData(() => request<List<Category>>('/api/categories'), [], () => ({ data: PH_CATEGORIES }))
+const categories = useApiData(() => request<List<Category>>('/api/categories'))
 
 const form = reactive({
   name: '',
@@ -60,8 +59,7 @@ async function submit() {
         <option :value="0" disabled>เลือกหมวดหมู่</option>
         <option v-for="c in categories.data.value?.data" :key="c.id" :value="c.id">{{ c.name }}</option>
       </select>
-      <span v-if="categories.placeholder.value" class="muted small">ตัวเลือกเป็นข้อมูลตัวอย่าง: <code>GET /api/categories</code> ยังไม่พร้อม ({{ categories.error.value?.status || 'ต่อไม่ได้' }})</span>
-      <span v-else-if="categories.error.value" class="muted small">โหลดหมวดหมู่ไม่ได้ ({{ categories.error.value.status || 'ต่อไม่ได้' }})</span>
+      <span v-if="categories.error.value" class="muted small">โหลดหมวดหมู่ไม่ได้ ({{ categories.error.value.status || 'ต่อไม่ได้' }})</span>
     </label>
     <label>รูปภาพ (URL) <input v-model="form.image_url" /></label>
     <label class="check"><input v-model="form.is_featured" type="checkbox" /> แสดงเป็นสินค้าแนะนำ</label>

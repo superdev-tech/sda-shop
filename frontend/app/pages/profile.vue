@@ -3,15 +3,14 @@
 //   เส้น 7: GET /api/me  (ต้อง login)
 import type { AuthUser } from '~/composables/useAuth'
 import type { One } from '~/composables/types'
-import { PH_ME } from '~/composables/placeholders'
 
 const { request } = useApi()
-const me = useApiData(() => request<One<AuthUser>>('/api/me'), [], () => ({ data: PH_ME }))
+const me = useApiData(() => request<One<AuthUser>>('/api/me'))
 </script>
 
 <template>
   <h1>โปรไฟล์ของฉัน</h1>
-  <ApiState :pending="me.pending.value" :error="me.error.value" endpoint="GET /api/me" skeleton="fields" :placeholder="me.placeholder.value">
+  <ApiState :pending="me.pending.value" :error="me.error.value" endpoint="GET /api/me">
     <div v-if="me.data.value" class="card">
       <p><span class="muted">ชื่อ</span> {{ me.data.value.data.name }}</p>
       <p><span class="muted">อีเมล</span> {{ me.data.value.data.email }}</p>

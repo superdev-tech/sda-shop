@@ -2,22 +2,17 @@
 // รายละเอียดคำสั่งซื้อ (ต้อง login)
 //   เส้น 14: GET /api/orders/:id
 import { ORDER_STATUS_LABEL, type One, type Order } from '~/composables/types'
-import { PH_ORDERS } from '~/composables/placeholders'
 
 const route = useRoute()
 const { request } = useApi()
 const id = computed(() => route.params.id as string)
-const order = useApiData(
-  () => request<One<Order>>(`/api/orders/${id.value}`),
-  [id],
-  () => ({ data: { ...(PH_ORDERS.find((o) => o.id === Number(id.value)) ?? PH_ORDERS[0]!), id: Number(id.value) || 1 } }),
-)
+const order = useApiData(() => request<One<Order>>(`/api/orders/${id.value}`), [id])
 </script>
 
 <template>
   <NuxtLink to="/orders" class="muted small">← คำสั่งซื้อทั้งหมด</NuxtLink>
   <h1>คำสั่งซื้อ #{{ id }}</h1>
-  <ApiState :pending="order.pending.value" :error="order.error.value" :endpoint="`GET /api/orders/${id}`" skeleton="rows" :placeholder="order.placeholder.value">
+  <ApiState :pending="order.pending.value" :error="order.error.value" :endpoint="`GET /api/orders/${id}`">
     <div v-if="order.data.value" class="card">
       <p>
         <span class="badge">{{ ORDER_STATUS_LABEL[order.data.value.data.status] }}</span>

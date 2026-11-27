@@ -64,29 +64,19 @@ export function useApi() {
 }
 
 // โหลดข้อมูลตอนเปิดหน้า และโหลดใหม่เมื่อค่าใน watch เปลี่ยน
-// fallback (ไม่บังคับ): ข้อมูลตัวอย่างที่ใช้แทน เมื่อ backend ยังไม่มีเส้นนี้ (404) หรือต่อไม่ได้
-//   ตอนนั้น placeholder = true และ error ยังเก็บไว้ ให้ ApiState แปะป้าย "ข้อมูลตัวอย่าง"
-export function useApiData<T>(
-  loader: () => Promise<T>,
-  watchSources: unknown[] = [],
-  fallback?: () => T | null,
-) {
+export function useApiData<T>(loader: () => Promise<T>, watchSources: unknown[] = []) {
   const data = ref<T | null>(null) as Ref<T | null>
   const error = ref<ApiError | null>(null)
   const pending = ref(true)
-  const placeholder = ref(false)
 
   async function refresh() {
     pending.value = true
     error.value = null
-    placeholder.value = false
     try {
       data.value = await loader()
     } catch (e) {
+      data.value = null
       error.value = e instanceof ApiError ? e : new ApiError(0, 'unknown', String(e))
-      const sample = fallback && (error.value.status === 404 || error.value.status === 0) ? fallback() : null
-      data.value = sample
-      placeholder.value = sample !== null
     } finally {
       pending.value = false
     }
@@ -95,5 +85,5 @@ export function useApiData<T>(
   onMounted(refresh)
   if (watchSources.length) watch(watchSources as never, refresh)
 
-  return { data, error, pending, placeholder, refresh }
+  return { data, error, pending, refresh }
 }
