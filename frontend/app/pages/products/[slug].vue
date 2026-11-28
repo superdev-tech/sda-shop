@@ -4,13 +4,21 @@
 //   เส้น 9: POST /api/cart/items  (ต้อง login)
 import type { ApiError } from '~/composables/useApi'
 import type { One, Product } from '~/composables/types'
+import { PH_PRODUCTS } from '~/composables/placeholders'
 
 const route = useRoute()
 const { request } = useApi()
 const { isLoggedIn } = useAuth()
 
 const slug = computed(() => route.params.slug as string)
-const product = useApiData(() => request<One<Product>>(`/api/products/${slug.value}`), [slug])
+const product = useApiData(
+  () => request<One<Product>>(`/api/products/${slug.value}`),
+  [slug],
+  () => {
+    const p = PH_PRODUCTS.find((x) => x.slug === slug.value)
+    return p ? { data: p } : null
+  },
+)
 
 const quantity = ref(1)
 const adding = ref(false)
@@ -37,7 +45,7 @@ async function addToCart() {
 
 <template>
   <NuxtLink to="/products" class="muted small">← กลับไปหน้าสินค้า</NuxtLink>
-  <ApiState :pending="product.pending.value" :error="product.error.value" :endpoint="`GET /api/products/${slug}`">
+  <ApiState :pending="product.pending.value" :error="product.error.value" :endpoint="`GET /api/products/${slug}`" skeleton="detail" :placeholder="product.placeholder.value">
     <div v-if="product.data.value" class="detail">
       <img :src="product.data.value.data.image_url || '/images/placeholder.svg'" :alt="product.data.value.data.name" />
       <div>

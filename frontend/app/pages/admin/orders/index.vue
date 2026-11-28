@@ -4,9 +4,10 @@
 //   เส้น 16: PATCH /api/admin/orders/:id/status   { status }
 import type { ApiError } from '~/composables/useApi'
 import { ORDER_STATUS_LABEL, type List, type Order, type OrderStatus } from '~/composables/types'
+import { PH_ADMIN_ORDERS } from '~/composables/placeholders'
 
 const { request } = useApi()
-const orders = useApiData(() => request<List<Order>>('/api/admin/orders'))
+const orders = useApiData(() => request<List<Order>>('/api/admin/orders'), [], () => ({ data: PH_ADMIN_ORDERS }))
 const statuses = Object.keys(ORDER_STATUS_LABEL) as OrderStatus[]
 
 const busy = ref(false)
@@ -39,6 +40,9 @@ async function setStatus(id: number, status: OrderStatus) {
     :error="orders.error.value"
     :empty="!orders.data.value?.data.length"
     endpoint="GET /api/admin/orders"
+    :placeholder="orders.placeholder.value"
+    skeleton="rows"
+    :count="4"
     empty-text="ยังไม่มีคำสั่งซื้อ"
   >
     <div class="card">
