@@ -3,11 +3,16 @@
 //   เส้น 1: GET /api/products/featured
 //   เส้น 2: GET /api/categories
 import type { Category, List, Product } from '~/composables/types'
+import { PH_CATEGORIES, PH_PRODUCTS } from '~/composables/placeholders'
 
 const { request } = useApi()
 
-const featured = useApiData(() => request<List<Product>>('/api/products/featured'))
-const categories = useApiData(() => request<List<Category>>('/api/categories'))
+const featured = useApiData(
+  () => request<List<Product>>('/api/products/featured'),
+  [],
+  () => ({ data: PH_PRODUCTS.filter((p) => p.is_featured) }),
+)
+const categories = useApiData(() => request<List<Category>>('/api/categories'), [], () => ({ data: PH_CATEGORIES }))
 </script>
 
 <template>
@@ -23,6 +28,8 @@ const categories = useApiData(() => request<List<Category>>('/api/categories'))
     :error="categories.error.value"
     :empty="!categories.data.value?.data.length"
     endpoint="GET /api/categories"
+    :placeholder="categories.placeholder.value"
+    skeleton="chips"
   >
     <div class="chips">
       <NuxtLink
@@ -42,6 +49,9 @@ const categories = useApiData(() => request<List<Category>>('/api/categories'))
     :error="featured.error.value"
     :empty="!featured.data.value?.data.length"
     endpoint="GET /api/products/featured"
+    :placeholder="featured.placeholder.value"
+    skeleton="cards"
+    :count="4"
     empty-text="ยังไม่มีสินค้าแนะนำ"
   >
     <div class="grid">
